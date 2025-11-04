@@ -8,16 +8,19 @@ const bcrypt = require('bcryptjs');
 const app = express();
 
 // ===== CORS =====
-// Allow requests from localhost (frontend dev) and ngrok URL
+// Allow requests from frontend (Render URL) and local dev
 const corsOptions = {
-    origin: [process.env.FRONTEND_URL || 'http://localhost:5173', process.env.NGROK_URL].filter(Boolean),
+    origin: [
+        process.env.FRONTEND_URL || 'https://taskflow-frontend-xxxx.onrender.com', // Replace with your frontend URL if using .env
+        'http://localhost:5173', // local dev
+    ],
     credentials: true,
 };
 app.use(cors(corsOptions));
 app.use(express.json());
 
 // ===== MongoDB =====
-const MONGODB_URI = process.env.MONGODB_URI;
+const MONGODB_URI = process.env.MONGODB_URI || 'your-mongodb-uri-here';
 const JWT_SECRET = process.env.JWT_SECRET || 'your-secret-key';
 
 if (!MONGODB_URI) {
